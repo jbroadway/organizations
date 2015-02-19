@@ -1,0 +1,69 @@
+{! user/util/userchooser !}
+{! admin/util/minimal-grid !}
+
+<p>
+	<a href="/organizations/admin">&laquo; {"Back"}</a>
+	&nbsp;|&nbsp;
+	<a href="#" id="add-member">{"Add member"}</a>
+	&nbsp;|&nbsp;
+	<a href="/organizations/addlocation?id={{id}}">{"Add location"}</a>
+	&nbsp;|&nbsp;
+	<a href="/organizations/edit?id={{id}}">{"Edit"}</a>
+	&nbsp;|&nbsp;
+	<a href="/organizations/delete" data-id="{{id}}" onclick="return $.confirm_and_post (this, {"Are you sure you want to delete this organization?"}')">{"Delete"}</a>	
+</p>
+
+<b>{"About"}:</b><br />
+<div class="editable-textarea" data-property="about" id="{{id}}">{{about}}</div>
+<br />
+
+<h3>{"Locations"}</h3>
+
+<p>...</p>
+
+<h3>{"Members"}</h3>
+
+<p>
+<table width="100%">
+	<tr>
+		<th width="42%">{" Name "}</th>
+		<th width="42%">{" Title "}</th>
+		<th width="16%">&nbsp;</th>
+	</tr>
+{% foreach members %}
+	<tr>
+		<td><a href="/user/details?id={{ loop_value->user_id }}">{{ loop_value->name }}</a></td>
+		<td>{{ loop_value->title }}</td>
+		<td style="text-align: right">
+			{% if User::require_acl ('admin/delete') %}
+			<a	href="/organizations/removemember"
+				data-id="{{ loop_value->id }}"
+				data-org="{{ id }}"
+				onclick="return $.confirm_and_post (this, '{"Are you sure you want to remove this member?"}')">{"Remove"}</a>
+			{% end %}
+		</td>
+	</tr>
+{% end %}
+</table>
+</p>
+
+<form id="add-member-form" method="post" action="/organizations/addmember">
+	<input type="hidden" name="org" value="{{id}}" />
+	<input type="hidden" name="user" id="user-id" value="" />
+</form>
+
+<script>
+$(function () {
+	$('#add-member').click (function (e) {
+		e.preventDefault ();
+		
+		$.userchooser ({
+			chosen: [{{ join (', ', $data->chosen) }}],
+			callback: function (user_id) {
+				$('#user-id').val (user_id);
+				$('#add-member-form').submit ();
+			}
+		});
+	});
+});
+</script>
