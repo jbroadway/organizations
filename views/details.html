@@ -10,7 +10,12 @@
 	&nbsp;|&nbsp;
 	<a href="/organizations/edit?id={{id}}">{"Edit"}</a>
 	&nbsp;|&nbsp;
-	<a href="/organizations/delete" data-id="{{id}}" onclick="return $.confirm_and_post (this, {"Are you sure you want to delete this organization?"}')">{"Delete"}</a>	
+	<a href="/organizations/delete" data-id="{{id}}" onclick="return $.confirm_and_post (this, '{"Are you sure you want to delete this organization?"}')">{"Delete"}</a>	
+</p>
+
+<p>
+	<b>{"Website"}:</b><br />
+	<a href="{{website}}" target="_blank">{{website|parse_url (%s, PHP_URL_HOST)}}</a>
 </p>
 
 <b>{"About"}:</b><br />
@@ -19,7 +24,32 @@
 
 <h3>{"Locations"}</h3>
 
-<p>...</p>
+<div class="e-row-variable" style="margin-bottom: 20px">
+	<div class="e-col-25 e-no-padding">
+		<b>{"Main Address"}</b><br />
+		{{address}}<br />
+		{% if address2 != '' %}{{address2}}<br />{% end %}
+		{{city}}, {{state}}<br />
+		{% if country != '' %}{{country|user\Data::country}}<br />{% end %}
+		{{zip}}
+		{% if phone != '' %}<br /><br />{{phone}}{% end %}
+	</div>
+{% foreach locations as _loc %}
+	<div class="e-col-25 e-no-padding">
+		<b>{{_loc->name}}</b><br />
+		{{_loc->address}}<br />
+		{% if _loc->address2 != '' %}{{_loc->address2}}<br />{% end %}
+		{{_loc->city}}, {{_loc->state}}<br />
+		{% if _loc->country != '' %}{{_loc->country|user\Data::country}}<br />{% end %}
+		{{_loc->zip}}
+		{% if _loc->phone != '' %}<br /><br />{{_loc->phone}}{% end %}
+		<br />
+		<a href="/organizations/editlocation?id={{_loc->id}}">{"Edit"}</a>
+		&nbsp;|&nbsp;
+		<a href="/organizations/removelocation" data-id="{{_loc->id}}" data-org="{{id}}" onclick="return $.confirm_and_post (this, '{"Are you sure you want to remove this location?"}')">{"Remove"}</a>
+	</div>
+{% end %}
+</div>
 
 <h3>{"Members"}</h3>
 

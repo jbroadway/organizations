@@ -1,0 +1,62 @@
+<div class="form">
+<form method="post" id="{{ _form }}">
+
+<p>
+	{"Name"}:<br />
+	<input type="text" name="name" value="{{ name|quotes }}" size="40" />
+</p>
+
+<p>
+	{"Phone"}:<br />
+	<input type="text" name="phone" value="{{ phone|quotes }}" size="20" />
+</p>
+
+<p>
+	{"Address"}:<br />
+	<input type="text" name="address" value="{{ address|quotes }}" size="40" />
+	<span class="notice" id="address-notice">{"Please enter an address."}</span>
+</p>
+
+<p>
+	{"Address line 2"}:<br />
+	<input type="text" name="address2" value="{{ address2|quotes }}" size="40" />
+</p>
+
+<p>
+	{"City"}:<br />
+	<input type="text" name="city" value="{{ city|quotes }}" size="40" />
+</p>
+
+<p>
+	{"State"}:<br />
+	<select name="state">
+		<option value="">- select -</option>
+{% for _key, _value in user\Data::states () %}
+		<option value="{{_key|quotes}}"{% if _key == $data->state %} selected{% end %}>{{_value}}</option>
+{% end %}
+	</select>
+</p>
+
+<p>
+	{"Country"}:<br />
+	<select name="country">
+		<option value="">- select -</option>
+{% for _key, _value in user\Data::countries () %}
+		<option value="{{_key|quotes}}"{% if _key == $data->country %} selected{% end %}>{{_value}}</option>
+{% end %}
+	</select>
+</p>
+
+<p>
+	{"Zip"}:<br />
+	<input type="text" name="zip" value="{{ zip|quotes }}" size="20" />
+</p>
+
+<p>
+	<input type="submit" value="{"Add Location"}" />
+	&nbsp;
+	<a href="/organizations/details?id={{id}}" onclick="return confirm ('{"Are you sure you want to cancel and lose any changes?"}')">{"Cancel"}</a>
+</p>
+
+</form>
+</div>
