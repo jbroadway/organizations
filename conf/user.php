@@ -1,0 +1,5 @@
+; <?php /*
+
+organizations/user = Organizations
+
+; */ ?>

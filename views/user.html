@@ -1,0 +1,5 @@
+<ul>
+{% foreach orgs as _org %}
+	<li><a href="/organizations/details?id={{_org->id}}">{{_org->name}}</a></li>
+{% end %}
+</ul>
