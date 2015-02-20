@@ -10,9 +10,31 @@ $limit = 20;
 $num = isset ($this->params[0]) ? $this->params[0] : 1;
 $offset = ($num - 1) * $limit;
 
+$q = isset ($_GET['q']) ? $_GET['q'] : ''; // search query
+$q_fields = array ('o.name', 'o.phone', 'o.address', 'o.city', 'o.about', 'l.name', 'l.phone', 'l.address', 'l.city');
+$q_exact = array ();
+$url = '/organizations/admin/%d?q=' . urlencode ($q);
+
 // Fetch the items and total items
-$items = organizations\Organization::query ()->fetch ($limit, $offset);
-$total = organizations\Organization::query ()->count ();
+//$items = organizations\Organization::query ()->fetch ($limit, $offset);
+//$total = organizations\Organization::query ()->count ();
+
+$items = organizations\Organization::query ('o.*')
+	->from ('#prefix#organizations o, #prefix#organizations_location l')
+	->where_search ($q, $q_fields, $q_exact)
+	->and_where (function ($q) {
+		$q->where ('l.organization = o.id');
+	})
+	->order ('o.name', 'asc')
+	->fetch_orig ($limit, $offset);
+
+$total = organizations\Organization::query ('o.*')
+	->from ('#prefix#organizations o, #prefix#organizations_location l')
+	->where_search ($q, $q_fields, $q_exact)
+	->and_where (function ($q) {
+		$q->where ('l.organization = o.id');
+	})
+	->count ();
 
 // Check for error, e.g., if table hasn't been created yet
 if ($items === false) {
@@ -33,7 +55,8 @@ echo $tpl->render (
 		'total' => $total,
 		'items' => $items,
 		'count' => count ($items),
-		'url' => '/organizations/admin/%d'
+		'q' => $q,
+		'url' => $url
 	)
 );
 

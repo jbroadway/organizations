@@ -1,6 +1,24 @@
+{! admin/util/minimal-grid !}
+{! admin/util/search !}
+
+<form method="get" id="search-form">
+
+<div class="e-row-variable e-no-padding" style="margin-bottom: 20px">
+	<div class="e-col-50 e-no-padding">
 {% if User::require_acl ('admin/add') %}
-<p><a href="/organizations/add">{"Add Organization"}</a></p>
+<a href="/organizations/add">{"Add Organization"}</a>
 {% end %}
+	</div>
+	<div class="e-col-50 e-no-padding" style="text-align: right">
+		<input type="text" name="q" id="search-query" size="40" value="{{q|quotes}}" />
+		<button>{"Search"}</button>
+		{% if q != '' %}
+		<button onclick="window.location.href = '/organizations/admin'; return false">{"Clear"}</button>
+		{% end %}
+	</div>
+</div>
+
+{! navigation/pager?style=results&url=[url]&total=[total]&count=[count]&limit=[limit] !}
 
 <p>
 <table width="100%">
@@ -33,4 +51,18 @@
 </table>
 </p>
 
-{! navigation/pager?style=text&url=[url]&total=[total]&count=[count]&limit=[limit] !}
+{% if total > $data->limit %}
+{! navigation/pager?style=numbers&url=[url]&total=[total]&count=[count]&limit=[limit] !}
+{% end %}
+
+</form>
+
+<script>
+$(function () {
+	$.search_init ({
+		form: '#search-form',
+		query: '#search-query',
+		links: '.search-for'
+	});
+});
+</script>

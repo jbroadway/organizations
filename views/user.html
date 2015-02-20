@@ -1,5 +1,13 @@
+{% if count ($data->orgs) == 0 %}
+<p><b>{"No organizations."}</b></p>
+{% else %}
+<p><b>{"Organizations"}:</b></p>
+
 <ul>
 {% foreach orgs as _org %}
 	<li><a href="/organizations/details?id={{_org->id}}">{{_org->name}}</a></li>
 {% end %}
 </ul>
+{% end %}
+
+<p><a href="/organizations/admin">{"All organizations"}</a></p>
