@@ -16,24 +16,15 @@ $q_exact = array ();
 $url = '/organizations/admin/%d?q=' . urlencode ($q);
 
 // Fetch the items and total items
-//$items = organizations\Organization::query ()->fetch ($limit, $offset);
-//$total = organizations\Organization::query ()->count ();
-
 $items = organizations\Organization::query ('o.*')
-	->from ('#prefix#organizations o, #prefix#organizations_location l')
+	->from ('#prefix#organizations o left join #prefix#organizations_location l on l.organization = o.id')
 	->where_search ($q, $q_fields, $q_exact)
-	->and_where (function ($q) {
-		$q->where ('l.organization = o.id');
-	})
 	->order ('o.name', 'asc')
 	->fetch_orig ($limit, $offset);
 
 $total = organizations\Organization::query ('o.*')
-	->from ('#prefix#organizations o, #prefix#organizations_location l')
+	->from ('#prefix#organizations o left join #prefix#organizations_location l on l.organization = o.id')
 	->where_search ($q, $q_fields, $q_exact)
-	->and_where (function ($q) {
-		$q->where ('l.organization = o.id');
-	})
 	->count ();
 
 // Check for error, e.g., if table hasn't been created yet
