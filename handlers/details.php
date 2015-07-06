@@ -18,10 +18,11 @@ $page->window_title = $organization->name;
 
 $organization = $organization->orig ();
 
-$organization->members = organizations\Member::query ('m.id, u.id as user_id, u.name, u.title')
+$organization->members = organizations\Member::query ('m.id, m.main, u.id as user_id, u.name, u.title')
 	->from ('#prefix#organizations_member m, #prefix#user u')
 	->where ('m.user = u.id')
 	->where ('m.organization', $_GET['id'])
+	->order ('m.main', 'desc')
 	->order ('u.name', 'asc')
 	->fetch_orig ();
 $organization->chosen = array ();

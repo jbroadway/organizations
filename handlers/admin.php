@@ -16,13 +16,13 @@ $q_exact = array ();
 $url = '/organizations/admin/%d?q=' . urlencode ($q);
 
 // Fetch the items and total items
-$items = organizations\Organization::query ('o.*')
+$items = organizations\Organization::query ('distinct o.*')
 	->from ('#prefix#organizations o left join #prefix#organizations_location l on l.organization = o.id')
 	->where_search ($q, $q_fields, $q_exact)
 	->order ('o.name', 'asc')
 	->fetch_orig ($limit, $offset);
 
-$total = organizations\Organization::query ('o.*')
+$total = organizations\Organization::query ('distinct o.*')
 	->from ('#prefix#organizations o left join #prefix#organizations_location l on l.organization = o.id')
 	->where_search ($q, $q_fields, $q_exact)
 	->count ();

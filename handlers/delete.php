@@ -15,6 +15,9 @@ if ($organization->error) {
 	$this->redirect ('/organizations/admin');
 }
 
+organizations\Location::delete_org ($_POST['id']);
+organizations\Member::delete_org ($_POST['id']);
+
 $this->add_notification (__ ('Organization deleted.'));
 $this->redirect ('/organizations/admin');
 

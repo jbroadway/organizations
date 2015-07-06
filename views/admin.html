@@ -7,7 +7,9 @@
 	<div class="e-col-50 e-no-padding">
 {% if User::require_acl ('admin/add') %}
 <a href="/organizations/add">{"Add Organization"}</a>
+&nbsp;|&nbsp;
 {% end %}
+<a href="/organizations/export">{"Export"}</a>
 	</div>
 	<div class="e-col-50 e-no-padding" style="text-align: right">
 		<input type="text" name="q" id="search-query" size="40" value="{{q|quotes}}" />

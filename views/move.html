@@ -1,0 +1,27 @@
+<div class="form">
+<form method="post" id="{{_form}}">
+
+<p>
+	{"Current Organization"}:<br />
+	<strong>{{org->name}}</strong>
+</p>
+
+<p>
+	{"Move To"}:<br />
+	<select name="move">
+		<option value="">{"- select -"}</option>
+	{% foreach orgs as _id, _name %}
+		<option value="{{_id}}"{% if move == $data->_id %} selected{% end %}>{{_name}}</option>
+	{% end %}
+	</select>
+	<span class="notice" id="move-notice">{"Please chose an organization to move to."}</span>
+</p>
+
+<p>
+	<button>{"Move User"}</button>
+	&nbsp;
+	<a href="/organizations/details?id={{org->id}}">{"Cancel"}</a>
+</p>
+
+</form>
+</div>

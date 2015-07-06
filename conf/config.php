@@ -3,7 +3,7 @@
 [Admin]
 
 name = Organizations
-version = 1.0.0
+version = 1.0.2
 handler = organizations/admin
 install = organizations/install
 upgrade = organizations/upgrade

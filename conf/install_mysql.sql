@@ -31,6 +31,7 @@ create table #prefix#organizations_member (
 	id int not null auto_increment primary key,
 	organization int not null,
 	user int not null,
+	main int not null default 0,
 	unique (organization, user),
 	index (organization),
 	index (user)

@@ -38,7 +38,8 @@ create sequence #prefix#organizations_member_id_seq;
 create table #prefix#organizations_member (
 	id integer default nextval('#prefix#organizations_member_id_seq') primary key,
 	organization int not null,
-	user int not null
+	user int not null,
+	main int not null default 0
 );
 
 create index #prefix#organizations_member_org on #prefix#organizations_member (organization);

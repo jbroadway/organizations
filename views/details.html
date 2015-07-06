@@ -56,15 +56,23 @@
 <p>
 <table width="100%">
 	<tr>
-		<th width="42%">{" Name "}</th>
-		<th width="42%">{" Title "}</th>
-		<th width="16%">&nbsp;</th>
+		<th width="36%">{" Name "}</th>
+		<th width="36%">{" Title "}</th>
+		<th width="28%">&nbsp;</th>
 	</tr>
 {% foreach members %}
 	<tr>
 		<td><a href="/user/details?id={{ loop_value->user_id }}">{{ loop_value->name }}</a></td>
 		<td>{{ loop_value->title }}</td>
 		<td style="text-align: right">
+			{% if loop_value->main %}
+			<strong>{"Main Contact"}</strong>
+			{% else %}
+			<a href="/organizations/main?org={{id}}&id={{loop_value->id}}">{"Make main contact"}</a>
+			{% end %}
+			&nbsp;|&nbsp;
+			<a href="/organizations/move?org={{id}}&id={{loop_value->id}}">{"Move"}</a>
+			&nbsp;|&nbsp;
 			{% if User::require_acl ('admin/delete') %}
 			<a	href="/organizations/removemember"
 				data-id="{{ loop_value->id }}"

@@ -32,7 +32,8 @@ create index #prefix#organizations_location_org on #prefix#organizations_locatio
 create table #prefix#organizations_member (
 	id integer primary key,
 	organization int not null default 0,
-	user int not null default 0
+	user int not null default 0,
+	main int not null default 0
 );
 
 create index #prefix#organizations_member_org on #prefix#organizations_member (organization);
