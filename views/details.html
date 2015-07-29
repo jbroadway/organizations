@@ -32,7 +32,8 @@
 		{{city}}, {{state}}<br />
 		{% if country != '' %}{{country|user\Data::country}}<br />{% end %}
 		{{zip}}
-		{% if phone != '' %}<br /><br />{{phone}}{% end %}
+		{% if phone != '' %}<br /><br />Phone: {{phone}}{% end %}
+		{% if fax != '' %}<br />Fax: {{fax}}{% end %}
 	</div>
 {% foreach locations as _loc %}
 	<div class="e-col-25 e-no-padding">
@@ -42,7 +43,8 @@
 		{{_loc->city}}, {{_loc->state}}<br />
 		{% if _loc->country != '' %}{{_loc->country|user\Data::country}}<br />{% end %}
 		{{_loc->zip}}
-		{% if _loc->phone != '' %}<br /><br />{{_loc->phone}}{% end %}
+		{% if _loc->phone != '' %}<br /><br />Phone: {{_loc->phone}}{% end %}
+		{% if _loc->fax != '' %}<br />Fax: {{_loc->fax}}{% end %}
 		<br />
 		<a href="/organizations/editlocation?id={{_loc->id}}">{"Edit"}</a>
 		&nbsp;|&nbsp;

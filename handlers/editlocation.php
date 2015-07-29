@@ -14,6 +14,7 @@ echo $form->handle (function ($form) {
 	$loc = $form->data;
 	$loc->name = $_POST['name'];
 	$loc->phone = $_POST['phone'];
+	$loc->fax = $_POST['fax'];
 	$loc->address = $_POST['address'];
 	$loc->address2 = $_POST['address2'];
 	$loc->city = $_POST['city'];

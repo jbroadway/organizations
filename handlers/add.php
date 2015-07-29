@@ -12,6 +12,7 @@ echo $form->handle (function ($form) {
 	$organization = new organizations\Organization (array (
 		'name' => $_POST['name'], 
 		'phone' => $_POST['phone'], 
+		'fax' => $_POST['fax'], 
 		'address' => $_POST['address'], 
 		'address2' => $_POST['address2'], 
 		'city' => $_POST['city'], 
