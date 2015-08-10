@@ -15,7 +15,7 @@
 
 <p>
 	<b>{"Website"}:</b><br />
-	<a href="{{website}}" target="_blank">{{website|parse_url (%s, PHP_URL_HOST)}}</a>
+	<a href="{{website|organizations\Filter::url}}" target="_blank">{{website|organizations\Filter::domain}}</a>
 </p>
 
 <b>{"About"}:</b><br />

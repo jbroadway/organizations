@@ -37,7 +37,7 @@
 	<tr>
 		<td><a href="/organizations/details?id={{ loop_value->id }}">{{ loop_value->name }}</a></td>
 		<td>{{ loop_value->phone }}</td>
-		<td><a href="{{ loop_value->website }}" target="_blank">{{ loop_value->website|parse_url (%s, PHP_URL_HOST) }}</a.</td>
+		<td><a href="{{ loop_value->website|organizations\Filter::url }}" target="_blank">{{ loop_value->website|organizations\Filter::domain }}</a></td>
 		<td>{{ loop_value->address }}, {{ loop_value->city }}, {{ loop_value->state }} {{ loop_value->zip }}</td>
 		<td style="text-align: right">
 			{% if User::require_acl ('admin/edit') %}
