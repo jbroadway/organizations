@@ -11,7 +11,10 @@ create table #prefix#organizations (
 	zip char(16) not null, 
 	website char(128) not null, 
 	about text,
-	index (name)
+	public enum('no','yes') not null default 'no',
+	category int not null default 0,
+	index (name),
+	index (public, category, name)
 );
 
 create table #prefix#organizations_location (
@@ -37,4 +40,10 @@ create table #prefix#organizations_member (
 	unique (organization, user),
 	index (organization),
 	index (user)
+);
+
+create table #prefix#organizations_category (
+	id int not null auto_increment primary key,
+	name char(72) not null,
+	index (name)
 );

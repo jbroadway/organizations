@@ -12,10 +12,13 @@ create table #prefix#organizations (
 	country char(3) not null, 
 	zip char(16) not null, 
 	website char(128) not null, 
-	about text
+	about text,
+	public varchar(3) not null default 'no',
+	category integer not null default 0
 );
 
 create index #prefix#organizations_name on #prefix#organizations (name);
+create index #prefix#organizations_public on #prefix#organizations (public, category, name);
 
 create sequence #prefix#organizations_location_id_seq;
 
@@ -47,3 +50,10 @@ create table #prefix#organizations_member (
 create index #prefix#organizations_member_org on #prefix#organizations_member (organization);
 create index #prefix#organizations_member_user on #prefix#organizations_member (user);
 create unique index #prefix#organizations_member_unique on #prefix#organizations_member (organization, user);
+
+create table #prefix#organizations_category (
+	id serial not null primary key,
+	name character varying(72) not null
+);
+
+create index #prefix#organizations_category_name on #prefix#organizations_category (name);
