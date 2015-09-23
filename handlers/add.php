@@ -7,6 +7,12 @@ $page->title = __ ('Add Organization');
 
 $form = new Form ('post', $this);
 
+$form->data = array (
+	'categories' => organizations\Category::query ()
+		->order ('name', 'asc')
+		->fetch_assoc ('id', 'name')
+);
+
 echo $form->handle (function ($form) {
 	// Create and save a new organization 
 	$organization = new organizations\Organization (array (
@@ -20,7 +26,9 @@ echo $form->handle (function ($form) {
 		'country' => $_POST['country'], 
 		'zip' => $_POST['zip'], 
 		'website' => $_POST['website'], 
-		'about' => $_POST['about'] 
+		'about' => $_POST['about'], 
+		'public' => $_POST['public'], 
+		'category' => $_POST['category']
 	));
 	$organization->put ();
 

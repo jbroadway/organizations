@@ -70,6 +70,23 @@
 </p>
 
 <p>
+	{"Publicly visible?"}<br />
+	<select name="public">
+		<option value="no"{% if public == 'no' %} selected{% end %}>{"No"}</option>
+		<option value="yes"{% if public == 'yes' %} selected{% end %}>{"Yes"}</option>
+	</select>
+</p>
+
+<p>
+	{"Category"}:<br />
+	<select name="category">
+	{% foreach categories as _id, _name %}
+		<?= Form::option ($data->_id, $data->_name, $data->category) ?>
+	{% end %}
+	</select>
+</p>
+
+<p>
 	<input type="submit" value="{"Save Organization"}" />
 	&nbsp;
 	<a href="/organizations/admin" onclick="return confirm ('{"Are you sure you want to cancel and lose any changes?"}')">{"Cancel"}</a>

@@ -7,11 +7,15 @@ $page->title = __ ('Edit Organization');
 
 $form = new Form ('post', $this);
 
-$form->data = new organizations\Organization ($_GET['id']);
+$organization = new organizations\Organization ($_GET['id']);
 
-echo $form->handle (function ($form) {
-	// Update the organization 
-	$organization = $form->data;
+$form->data = $organization->orig ();
+$form->data->categories = organizations\Category::query ()
+	->order ('name', 'asc')
+	->fetch_assoc ('id', 'name');
+
+echo $form->handle (function ($form) use ($organization) {
+	// Update the organization
 	$organization->name = $_POST['name'];
 	$organization->phone = $_POST['phone'];
 	$organization->fax = $_POST['fax'];
@@ -23,6 +27,8 @@ echo $form->handle (function ($form) {
 	$organization->zip = $_POST['zip'];
 	$organization->website = $_POST['website'];
 	$organization->about = $_POST['about'];
+	$organization->public = $_POST['public'];
+	$organization->category = $_POST['category'];
 	$organization->put ();
 
 	if ($organization->error) {

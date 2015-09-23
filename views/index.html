@@ -1,1 +1,17 @@
-<p>{{ body|none }}</p>
+{% foreach categories as cat %}
+<div class="organization-list">
+	<h3>{{cat['name']}}</h3>
+
+	<ul class="organizations">
+	{% foreach cat['orgs'] as org %}
+		<li class="organization">
+			{% if org->website != '' %}
+				<a href="{{org->website}}">{{org->name}}</a>
+			{% else %}
+				{{org->name}}
+			{% end %}
+		</li>
+	{% end %}
+	</ul>
+</div>
+{% end %}
