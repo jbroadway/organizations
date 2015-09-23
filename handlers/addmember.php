@@ -33,6 +33,8 @@ if (! $m->put ()) {
 	$this->redirect ('/organizations/details?id=' . Template::sanitize ($_POST['org']));
 }
 
+$this->hook ('organizations/addmember', $_POST);
+
 $this->add_notification (__ ('Member added.'));
 $this->redirect ('/organizations/details?id=' . Template::sanitize ($_POST['org']));
 

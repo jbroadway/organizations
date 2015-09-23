@@ -54,6 +54,15 @@ echo $form->handle (function ($form) use ($tpl, $page, $m, $u) {
 		return false;
 	}
 	
+	$this->hook ('organizations/removemember', array (
+		'org' => $_GET['org'],
+		'user' => $_GET['id']
+	));
+	$this->hook ('organizations/addmember', array (
+		'org' => $_POST['move'],
+		'user' => $_GET['id']
+	));
+	
 	$data = (array) $form->data;
 	$data['moved'] = $moved->orig ();
 	$page->title = __ ('User Moved: %s', $u->name);

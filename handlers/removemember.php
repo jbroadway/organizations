@@ -15,6 +15,8 @@ if ($m->error) {
 	$this->redirect ('/organizations/details?id=' . Template::sanitize ($_POST['org']));
 }
 
+$this->hook ('organizations/removemember', $_POST);
+
 $this->add_notification (__ ('Member removed.'));
 $this->redirect ('/organizations/details?id=' . Template::sanitize ($_POST['org']));
 
