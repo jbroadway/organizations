@@ -4,7 +4,7 @@
 
 	<ul class="organizations">
 	{% foreach cat['orgs'] as org %}
-		<li class="organization">
+		<li class="organization" title="{{org->name}}">
 			{% if org->website != '' %}
 				<a href="{{org->website}}">{{org->name}}</a>
 			{% else %}
