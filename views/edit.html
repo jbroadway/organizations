@@ -80,6 +80,7 @@
 <p>
 	{"Category"}:<br />
 	<select name="category">
+		<option value="">{"- select -"}</option>
 	{% foreach categories as _id, _name %}
 		<?= Form::option ($data->_id, $data->_name, $data->category) ?>
 	{% end %}
