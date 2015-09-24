@@ -40,6 +40,8 @@ echo $form->handle (function ($form) use ($organization) {
 
 	// Save a version of the organization 
 	Versions::add ($organization);
+	
+	$form->controller->hook ('organizations/edit', array ('id' => $organization->id));
 
 	// Notify the user and redirect on success
 	$form->controller->add_notification (__ ('Organization saved.'));
