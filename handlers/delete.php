@@ -15,10 +15,10 @@ if ($organization->error) {
 	$this->redirect ('/organizations/admin');
 }
 
+$this->hook ('organizations/delete', $_POST);
+
 organizations\Location::delete_org ($_POST['id']);
 organizations\Member::delete_org ($_POST['id']);
-
-$this->hook ('organizations/delete', $_POST);
 
 $this->add_notification (__ ('Organization deleted.'));
 $this->redirect ('/organizations/admin');
