@@ -56,11 +56,11 @@ echo $form->handle (function ($form) use ($tpl, $page, $m, $u) {
 	
 	$this->hook ('organizations/removemember', array (
 		'org' => $_GET['org'],
-		'user' => $_GET['id']
+		'user' => $u->id
 	));
 	$this->hook ('organizations/addmember', array (
 		'org' => $_POST['move'],
-		'user' => $_GET['id']
+		'user' => $u->id
 	));
 	
 	$data = (array) $form->data;
