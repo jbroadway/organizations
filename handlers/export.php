@@ -22,6 +22,8 @@ $res = DB::fetch (
 		o.country as primary_country,
 		o.zip as primary_zip,
 		o.website as primary_website,
+		o.public as is_public,
+		c.name as category,
 		o.about as primary_about,
 		l.name as location_name,
 		l.phone as location_phone,
@@ -34,6 +36,7 @@ $res = DB::fetch (
 	 from
 	 	#prefix#organizations o
 	 	left join #prefix#organizations_location l on l.organization = o.id
+	 	left join #prefix#organizations_category c on o.category = c.id
 	 order by
 	 	organization_name asc,
 	 	location_name asc'
