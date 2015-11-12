@@ -13,6 +13,7 @@ header ('Content-Disposition: attachment; filename=organizations-' . gmdate ('Y-
 
 $res = DB::fetch (
 	'select
+		o.id,
 		o.name as organization_name,
 		o.phone as primary_phone,
 		o.address as primary_address,
@@ -47,14 +48,27 @@ if (! is_array ($res)) {
 }
 
 if (count ($res) > 0) {
-	$keys = array_keys ((array) $res[0]);
+	// Ignore ID
+	$arr = (array) $res[0];
+	array_shift ($arr);
+	$keys = array_keys ($arr);
 	$keys = array_map ('user\Filter::csv_header', $keys);
+	
+	// Add contact fields
+	$keys[] = 'Main Contact';
+	$keys[] = 'Contact Title';
+	$keys[] = 'Contact Email';
+	$keys[] = 'Contact Phone';
+
 	echo join (',', $keys) . "\n";
 }
 
 foreach ($res as $row) {
 	$sep = '';
-	foreach ((array) $row as $k => $v) {
+	$arr = (array) $row;
+	$org = array_shift ($arr);
+
+	foreach ($arr as $k => $v) {
 		$v = str_replace ('"', '""', $v);
 		if (strpos ($v, ',') !== false) {
 			$v = '"' . $v . '"';
@@ -63,5 +77,26 @@ foreach ($res as $row) {
 		echo $sep . $v;
 		$sep = ',';
 	}
+	
+	// Add contact fields
+	$main = DB::single (
+		'select u.name, u.title, u.email, u.phone
+		 from #prefix#organizations_member m, #prefix#user u
+		 where m.organization = ? and m.main = 1 and m.user = u.id',
+		$org
+	);
+	if (is_object ($main)) {
+		$fields = array ('name', 'title', 'email', 'phone');
+
+		foreach ($fields as $field) {
+			$v = str_replace ('"', '""', $main->{$field});
+			if (strpos ($v, ',') !== false) {
+				$v = '"' . $v . '"';
+			}
+			$v = str_replace (array ("\n", "\r"), array ('\\n', '\\r'), $v);
+			echo $sep . $v;
+		}
+	}
+
 	echo "\n";
 }
