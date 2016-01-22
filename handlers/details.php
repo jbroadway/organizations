@@ -15,6 +15,9 @@ $page->title = sprintf (
 	Template::sanitize ($organization->name)
 );
 $page->window_title = $organization->name;
+$page->add_style ('/apps/user/css/details.css');
+$page->add_script ('/apps/user/js/react/react.js');
+$page->add_script ('/apps/user/js/build/notes.js');
 
 $organization = $organization->orig ();
 
